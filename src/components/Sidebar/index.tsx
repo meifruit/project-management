@@ -11,6 +11,7 @@ import {
   ChevronDown,
   ChevronUp,
   FolderGit2,
+  FolderKey,
   Home,
   Layers3,
   LockIcon,
@@ -96,7 +97,7 @@ const Sidebar = () => {
             <SidebarLink
               key={project.id}
               href={`/projects/${project.id}`}
-              icon={FolderGit2}
+              icon={FolderKey}
               label={project.name}
             />
           ))}
