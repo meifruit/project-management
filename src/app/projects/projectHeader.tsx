@@ -1,9 +1,13 @@
 import Header from "@/components/Header";
 import {
+  ArrowUpDown,
   Clock,
+  Filter,
   LayoutDashboard,
   LayoutDashboardIcon,
   List,
+  Plus,
+  Search,
   Table,
 } from "lucide-react";
 import { useState } from "react";
@@ -47,6 +51,30 @@ const projectHeader = ({ activeTab, setActiveTab }: Props) => {
             setActiveTab={setActiveTab}
             activeTab={activeTab}
           />
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-2 md:justify-between">
+        <div className="flex items-start gap-2 py-4 md:gap-4">
+          <button className="flex items-center justify-between gap-1 rounded-md bg-[#7678ed] p-3 text-gray-400 shadow-md hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300">
+            <Plus className="h-5 w-5" />
+            <span className="hidden md:inline">Add New Task</span>
+          </button>
+          <button className="flex items-center justify-between gap-1 rounded-md p-3 text-gray-400 shadow-md hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300">
+            <Filter className="h-5 w-5" />
+            <span className="hidden md:inline">Filter</span>
+          </button>
+          <button className="flex items-center justify-between gap-1 rounded-md p-3 text-gray-400 shadow-md hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300">
+            <ArrowUpDown className="h-5 w-5" />
+            <span className="hidden md:inline">Sort By</span>
+          </button>
+        </div>
+        <div className="relative flex">
+          <Search className="absolute left-[6px] top-1/2 h-5 w-5 -translate-y-1/2 transform cursor-pointer text-gray-400 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300" />
+          <input
+            type="text"
+            className="flex items-center justify-between gap-1 rounded-md p-3 pl-8 pr-0 shadow-md focus:outline-none dark:bg-dark-secondary dark:text-white md:pr-2"
+            placeholder="Search task"
+          ></input>
         </div>
       </div>
     </div>
