@@ -55,7 +55,7 @@ const projectHeader = ({ activeTab, setActiveTab }: Props) => {
       </div>
       <div className="flex flex-wrap items-center gap-2 md:justify-between">
         <div className="flex items-start gap-2 py-4 md:gap-4">
-          <button className="flex items-center justify-between gap-1 rounded-md bg-[#7678ed] p-3 text-gray-400 shadow-md hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300">
+          <button className="flex items-center justify-between gap-1 rounded-md bg-[#7678ed] p-3 text-white shadow-md hover:text-gray-600 dark:hover:text-gray-300">
             <Plus className="h-5 w-5" />
             <span className="hidden md:inline">Add New Task</span>
           </button>
