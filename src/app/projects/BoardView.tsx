@@ -1,8 +1,10 @@
 import { useGetTasksQuery, useUpdateTaskStatusMutation } from "@/state/api";
-import { DndProvider, useDrop } from "react-dnd";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Task as TaskType } from "@/state/api";
 import { EllipsisVertical, Plus } from "lucide-react";
+import { format } from "date-fns";
+import Image from "next/image";
 
 type BoardProps = {
   id: string;
@@ -113,6 +115,91 @@ const TaskColumn = ({
             onClick={() => setIsModalNewTaskOpen(true)}
           >
             <Plus size={16} />
+          </button>
+        </div>
+      </div>
+      {tasks
+        .filter((task) => task.status === status)
+        .map((task) => (
+          <Task key={task.id} task={task} />
+        ))}
+    </div>
+  );
+};
+
+type TaskProps = {
+  task: TaskType;
+};
+
+const Task = ({ task }: TaskProps) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "task",
+    item: { id: task.id },
+    collect: (monitor: any) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
+  const taskTagsSplit = task.tags ? task.tags.split(",") : [];
+
+  const formattedStartDate = task.startDate
+    ? format(new Date(task.startDate), "P")
+    : "";
+  const formattedDueDate = task.dueDate
+    ? format(new Date(task.dueDate), "P")
+    : "";
+  const numberOfComments = (task.comments && task.comments.length) || 0;
+  const PriorityTag = ({ priority }: { priority: TaskType["priority"] }) => (
+    <div
+      className={`rounded-lg px-2 py-1 text-xs font-semibold ${
+        priority === "Urgent"
+          ? "bg-red-200 text-red-700"
+          : priority === "High"
+            ? "bg-yellow-200 text-yellow-700"
+            : priority === "Medium"
+              ? "bg-green-200 text-green-700"
+              : priority === "Low"
+                ? "bg-blue-200 text-blue-700"
+                : "bg-gray-200 text-gray-700"
+      }`}
+    >
+      {" "}
+      {priority}
+    </div>
+  );
+  return (
+    <div
+      ref={(instance) => {
+        drag(instance);
+      }}
+      className={`mb-4 rounded-md bg-white shadow-md dark:bg-dark-secondary ${
+        isDragging ? "opacity-50" : "opacity-100"
+      }`}
+    >
+      {task.attachments && task.attachments?.length > 0 && (
+        <Image
+          src={`/${task.attachments[0].fileURL}`}
+          alt={task.attachments[0].fileName}
+          width={400}
+          height={200}
+          className="h-auto w-full rounded-t-md"
+        />
+      )}
+      <div className="p-4 md:p-6">
+        <div className="flex items-start justify-between">
+          <div className="flex flex-1 flex-wrap items-center gap-2">
+            {task.priority && <PriorityTag priority={task.priority} />}
+            <div className="flex gap-2">
+              {taskTagsSplit.map((tag) => (
+                <div className="px-2 py-1 text-xs text-blue-600" key={tag}>
+                  {" "}
+                  {tag}
+                </div>
+              ))}
+            </div>
+          </div>
+          <button className="flex h-6 w-4 flex-shrink-0 items-center justify-center dark:text-neutral-500">
+            <EllipsisVertical size={26} />
           </button>
         </div>
       </div>
