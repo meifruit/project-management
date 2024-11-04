@@ -2,7 +2,7 @@ import { useGetTasksQuery, useUpdateTaskStatusMutation } from "@/state/api";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Task as TaskType } from "@/state/api";
-import { EllipsisVertical, Plus } from "lucide-react";
+import { EllipsisVertical, MessageSquareMore, Plus } from "lucide-react";
 import { format } from "date-fns";
 import Image from "next/image";
 
@@ -149,6 +149,7 @@ const Task = ({ task }: TaskProps) => {
     ? format(new Date(task.dueDate), "P")
     : "";
   const numberOfComments = (task.comments && task.comments.length) || 0;
+
   const PriorityTag = ({ priority }: { priority: TaskType["priority"] }) => (
     <div
       className={`rounded-lg px-2 py-1 text-xs font-semibold ${
@@ -181,7 +182,7 @@ const Task = ({ task }: TaskProps) => {
           src={`/${task.attachments[0].fileURL}`}
           alt={task.attachments[0].fileName}
           width={400}
-          height={200}
+          height={150}
           className="h-auto w-full rounded-t-md"
         />
       )}
@@ -243,6 +244,12 @@ const Task = ({ task }: TaskProps) => {
                 src={`/${task.author.profilePictureUrl}`}
               />
             )}
+          </div>
+          <div className="flex items-center text-gray-500 dark:text-neutral-500">
+            <MessageSquareMore size={20} />
+            <span className="ml-1 text-sm dark:text-neutral-400">
+              {numberOfComments}
+            </span>
           </div>
         </div>
       </div>
