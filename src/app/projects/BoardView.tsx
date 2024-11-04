@@ -100,7 +100,7 @@ const TaskColumn = ({
             {status}{" "}
           </h3>
           <span
-            className="ml-2 inline-block rounded-full bg-gray-200 p-1 text-center text-sm leading-none dark:bg-dark-tertiary"
+            className="ml-2 inline-block rounded-full bg-gray-200 p-1 text-center text-sm leading-[1.2] dark:bg-dark-tertiary"
             style={{ width: "1.5rem", height: "1.5rem" }}
           >
             {tasksCount}
@@ -185,7 +185,7 @@ const Task = ({ task }: TaskProps) => {
           className="h-auto w-full rounded-t-md"
         />
       )}
-      <div className="p-4 md:p-6">
+      <div className="flex flex-col justify-between gap-4 p-4 md:p-6">
         <div className="flex items-start justify-between">
           <div className="flex flex-1 flex-wrap items-center gap-2">
             {task.priority && <PriorityTag priority={task.priority} />}
@@ -201,6 +201,49 @@ const Task = ({ task }: TaskProps) => {
           <button className="flex h-6 w-4 flex-shrink-0 items-center justify-center dark:text-neutral-500">
             <EllipsisVertical size={26} />
           </button>
+        </div>
+        <div className="flex flex-col justify-between">
+          <h4 className="mt-2 text-base font-semibold dark:text-white">
+            {task.title}
+          </h4>
+          <p className="text-sm text-gray-500 dark:text-neutral-500">
+            {task.description}
+          </p>
+          {typeof task.points === "number" && (
+            <div className="text-xs font-semibold dark:text-white">
+              {task.points} pts
+            </div>
+          )}
+        </div>
+        <div className="text-sm font-semibold text-gray-500 dark:text-neutral-500">
+          {formattedStartDate && <span>{formattedStartDate} - </span>}
+          {formattedDueDate && <span>{formattedDueDate}</span>}
+        </div>
+        <div className="border-t border-gray-200 dark:border-stroke-dark" />
+        {/* users */}
+        <div className="mt-3 flex items-center justify-between">
+          <div className="flex -space-x-[6px] overflow-hidden">
+            {task.assignee && (
+              <Image
+                key={task.assignee.userId}
+                src={`/${task.assignee.profilePictureUrl}`}
+                alt={task.assignee.username}
+                width={30}
+                height={30}
+                className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+              />
+            )}
+            {task.author && (
+              <Image
+                key={task.author.userId}
+                alt={task.author.username}
+                width={30}
+                height={30}
+                className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+                src={`/${task.author.profilePictureUrl}`}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
