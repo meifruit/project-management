@@ -2,65 +2,55 @@ import { Task } from "@/state/api";
 import { format } from "date-fns";
 import Image from "next/image";
 import React from "react";
+import Table from "./Table";
 
-type Props = {
+type TaskProps = {
   task: Task;
 };
 
-const TaskCard = ({ task }: Props) => {
+const columns = [
+  {
+    header: "Task Name",
+    accessor: "taskname",
+  },
+  {
+    header: "Description",
+    accessor: "description",
+    className: "hidden md:table-cell",
+  },
+  {
+    header: "Estimation",
+    accessor: "estimation",
+    className: "hidden md:table-cell",
+  },
+  {
+    header: "Type",
+    accessor: "type",
+    className: "hidden lg:table-cell",
+  },
+  {
+    header: "People",
+    accessor: "people",
+    className: "hidden lg:table-cell",
+  },
+  {
+    header: "Priority",
+    accessor: "priority",
+  },
+];
+
+const renderRow = (item: Task) => (
+  <tr className="hover:bg-purplelight cursor-pointer border-b border-gray-200 text-sm">
+    <td className="hidden md:table-cell">{item.title}</td>
+    <td className="hidden md:table-cell">{item.description}</td>
+    <td className="hidden md:table-cell">{}</td>
+    <td className="hidden md:table-cell">{item.assignee?.username}</td>
+  </tr>
+);
+const TaskCard = ({ task }: TaskProps) => {
   return (
     <div className="mb-3 rounded bg-white p-4 shadow dark:bg-dark-secondary dark:text-white">
-      {task.attachments && task.attachments.length > 0 && (
-        <div>
-          <strong>Attachments:</strong>
-          <div className="flex flex-wrap">
-            {task.attachments && task.attachments.length > 0 && (
-              <Image
-                src={`/${task.attachments[0].fileURL}`}
-                alt={task.attachments[0].fileName}
-                width={400}
-                height={200}
-                className="rounded-md"
-              />
-            )}
-          </div>
-        </div>
-      )}
-      <p>
-        <strong>ID:</strong> {task.id}
-      </p>
-      <p>
-        <strong>Title:</strong> {task.title}
-      </p>
-      <p>
-        <strong>Description:</strong>{" "}
-        {task.description || "No description provided"}
-      </p>
-      <p>
-        <strong>Status:</strong> {task.status}
-      </p>
-      <p>
-        <strong>Priority:</strong> {task.priority}
-      </p>
-      <p>
-        <strong>Tags:</strong> {task.tags || "No tags"}
-      </p>
-      <p>
-        <strong>Start Date:</strong>{" "}
-        {task.startDate ? format(new Date(task.startDate), "P") : "Not set"}
-      </p>
-      <p>
-        <strong>Due Date:</strong>{" "}
-        {task.dueDate ? format(new Date(task.dueDate), "P") : "Not set"}
-      </p>
-      <p>
-        <strong>Author:</strong>{" "}
-        {task.author ? task.author.username : "Unknown"}
-      </p>
-      <p>
-        <strong>Assignee:</strong>{" "}
-        {task.assignee ? task.assignee.username : "Unassigned"}
-      </p>
+      <Table columns={columns} renderRow={renderRow} data={[task]} />
     </div>
   );
 };
