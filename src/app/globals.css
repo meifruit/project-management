@@ -63,3 +63,7 @@ body,
   width: 0px;
   height: 0px;
 }
+.timeline ._3ZbQT,
+.timeline ._3_ygE {
+  @apply hidden;
+}
