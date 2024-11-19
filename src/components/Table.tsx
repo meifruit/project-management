@@ -3,16 +3,25 @@ const Table = ({
   renderRow,
   data,
 }: {
-  columns: { header: string; accessor: string; className?: string }[];
+  columns: {
+    header: string;
+    accessor: string;
+    width: string;
+    className?: string;
+  }[];
   renderRow: (item: any) => React.ReactNode;
   data: any[];
 }) => {
   return (
-    <table className="mt-4 w-full">
+    <table className="w-full table-fixed">
       <thead>
-        <tr className="text-left text-sm text-gray-500">
+        <tr className="text-left text-sm font-semibold text-gray-500">
           {columns.map((col) => (
-            <th key={col.accessor} className={col.className}>
+            <th
+              key={col.accessor}
+              className={`border-b border-gray-300 ${col.className || ""}`}
+              style={{ width: col.width }}
+            >
               {col.header}
             </th>
           ))}

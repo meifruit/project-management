@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Table from "@/components/Table";
 import { useGetTasksQuery } from "@/state/api";
 import { Task as TaskType } from "@/state/api";
+import { format } from "date-fns";
 type ListProps = {
   id: string;
   setIsModalNewTaskOpen: (isOpen: boolean) => void;
@@ -47,45 +48,62 @@ const columns = [
   {
     header: "Task Name",
     accessor: "taskname",
+    width: "20%",
   },
   {
     header: "Description",
     accessor: "description",
     className: "hidden md:table-cell",
+    width: "30%",
   },
   {
     header: "Estimation",
     accessor: "estimation",
     className: "hidden md:table-cell",
+    width: "25%",
   },
-  {
-    header: "Type",
-    accessor: "type",
-    className: "hidden lg:table-cell",
-  },
+  // {
+  //   header: "Type",
+  //   accessor: "type",
+  //   className: "hidden lg:table-cell",
+  // },
   {
     header: "People",
     accessor: "people",
     className: "hidden lg:table-cell",
+    width: "15%",
   },
   {
     header: "Priority",
     accessor: "priority",
+    width: "10%",
   },
 ];
 
-const renderRow = (task: TaskType) => (
-  <tr
-    className="hover:bg-purplelight cursor-pointer border-b border-gray-200 text-sm"
-    key={task.id}
-  >
-    <td className="hidden md:table-cell">{task.title}</td>
-    <td className="hidden md:table-cell">{task.description}</td>
-    <td className="hidden md:table-cell"></td>
-    <td className="hidden md:table-cell">{task.assignee?.username}</td>
-    <td>{task.priority}</td>
-  </tr>
-);
+const renderRow = (task: TaskType) => {
+  const formattedStartDate = task.startDate
+    ? format(new Date(task.startDate), "P")
+    : "";
+  const formattedDueDate = task.dueDate
+    ? format(new Date(task.dueDate), "P")
+    : "";
+
+  const rowClasses =
+    "cursor-pointer border-b border-gray-200 text-sm hover:bg-[#bde0fe]";
+  const cellClasses = "py-2 border-l pl-2 font-bold text-gray-700";
+  return (
+    <tr className={rowClasses} key={task.id}>
+      <td className={cellClasses}>{task.title}</td>
+      <td className={cellClasses}>{task.description}</td>
+      <td className={cellClasses}>
+        {formattedStartDate && <span>{formattedStartDate} - </span>}
+        {formattedDueDate && <span>{formattedDueDate}</span>}
+      </td>
+      <td className={cellClasses}>{task.assignee?.username}</td>
+      <td className={cellClasses}>{task.priority}</td>
+    </tr>
+  );
+};
 
 const TaskCard = ({ status, tasks }: TaskProps) => {
   const tasksCount = tasks.filter((task) => task.status === status);
