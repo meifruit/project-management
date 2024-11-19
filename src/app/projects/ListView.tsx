@@ -62,8 +62,7 @@ const columns = [
   {
     header: "Estimation",
     accessor: "estimation",
-    className: "hidden md:table-cell",
-    width: "25%",
+    width: "25% ",
   },
   // {
   //   header: "Type",
@@ -73,7 +72,7 @@ const columns = [
   {
     header: "People",
     accessor: "people",
-    className: "hidden lg:table-cell",
+    className: "hidden md:table-cell",
     width: "15%",
   },
   {
@@ -114,12 +113,14 @@ const renderRow = (task: TaskType) => {
   return (
     <tr className={rowClasses} key={task.id}>
       <td className={cellClasses}>{task.title}</td>
-      <td className={cellClasses}>{task.description}</td>
+      <td className={`hidden md:table-cell ${cellClasses}`}>
+        {task.description}
+      </td>
       <td className={cellClasses}>
         {formattedStartDate && <span>{formattedStartDate} - </span>}
         {formattedDueDate && <span>{formattedDueDate}</span>}
       </td>
-      <td className={cellClasses}>
+      <td className={`hidden md:table-cell ${cellClasses}`}>
         <div className="flex -space-x-[6px] overflow-hidden">
           {task.assignee && (
             <Image
