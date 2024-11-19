@@ -89,6 +89,23 @@ const renderRow = (task: TaskType) => {
     ? format(new Date(task.dueDate), "P")
     : "";
 
+  const PriorityTag = ({ priority }: { priority: TaskType["priority"] }) => (
+    <div
+      className={`flex max-w-fit items-center justify-start rounded-md px-2 py-1 text-xs font-semibold ${
+        priority === "Urgent"
+          ? "bg-red-200 text-red-700"
+          : priority === "High"
+            ? "bg-yellow-200 text-yellow-700"
+            : priority === "Medium"
+              ? "bg-green-200 text-green-700"
+              : priority === "Low"
+                ? "bg-blue-200 text-blue-700"
+                : "bg-gray-200 text-gray-700"
+      }`}
+    >
+      {priority}
+    </div>
+  );
   const rowClasses =
     "cursor-pointer border-b border-gray-200 text-sm hover:bg-[#bde0fe]";
   const cellClasses = "py-2 border-l pl-2 font-bold text-gray-700";
@@ -124,7 +141,10 @@ const renderRow = (task: TaskType) => {
           )}
         </div>
       </td>
-      <td className={cellClasses}>{task.priority}</td>
+      <td className={cellClasses}>
+        {" "}
+        {task.priority && <PriorityTag priority={task.priority} />}
+      </td>
     </tr>
   );
 };
