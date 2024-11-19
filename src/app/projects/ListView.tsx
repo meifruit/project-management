@@ -188,10 +188,10 @@ const TaskCard = ({ status, tasks }: TaskProps) => {
           )}
           <div
             className="h-5 w-2 rounded-md shadow-md"
-            style={{ backgroundColor: statusColor[status] }}
+            style={{ backgroundColor: color }}
           />
           <h3 className="flex items-center pl-4 text-lg font-semibold dark:text-white">
-            {status}{" "}
+            {status} ({tasksCount.length})
           </h3>
         </div>
       </div>
