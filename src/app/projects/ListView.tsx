@@ -158,16 +158,19 @@ const TaskCard = ({ status, tasks }: TaskProps) => {
     "Under Review": "#007200",
     Completed: "#000000",
   };
+  const color = statusColor[status] || "#CCCCCC";
   return (
     <div>
-      <div className="mb-2 flex w-full rounded-md bg-gray-200 p-3">
-        <div
-          className="mr-2 rounded-md border-l-4 border-gray-400 shadow-md"
-          style={{ backgroundColor: statusColor[status] }}
-        />
-        <span className="font-semibold">
-          {status} ({tasksCount.length})
-        </span>
+      <div className="mb-1 flex w-full items-center rounded-md bg-gray-200 p-3">
+        <div className="flex items-center">
+          <div
+            className="h-5 w-2 rounded-md shadow-md"
+            style={{ backgroundColor: statusColor[status] }}
+          />
+          <h3 className="flex items-center pl-4 text-lg font-semibold dark:text-white">
+            {status}{" "}
+          </h3>
+        </div>
       </div>
       <div className="mb-3 rounded bg-white p-4 shadow dark:bg-dark-secondary dark:text-white">
         <Table columns={columns} renderRow={renderRow} data={tasksCount} />
