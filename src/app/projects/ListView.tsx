@@ -3,6 +3,7 @@ import Table from "@/components/Table";
 import { useGetTasksQuery } from "@/state/api";
 import { Task as TaskType } from "@/state/api";
 import { format } from "date-fns";
+import Image from "next/image";
 type ListProps = {
   id: string;
   setIsModalNewTaskOpen: (isOpen: boolean) => void;
@@ -99,7 +100,30 @@ const renderRow = (task: TaskType) => {
         {formattedStartDate && <span>{formattedStartDate} - </span>}
         {formattedDueDate && <span>{formattedDueDate}</span>}
       </td>
-      <td className={cellClasses}>{task.assignee?.username}</td>
+      <td className={cellClasses}>
+        <div className="flex -space-x-[6px] overflow-hidden">
+          {task.assignee && (
+            <Image
+              key={task.assignee.userId}
+              src={`/${task.assignee.profilePictureUrl}`}
+              alt={task.assignee.username}
+              width={30}
+              height={30}
+              className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+            />
+          )}
+          {task.author && (
+            <Image
+              key={task.author.userId}
+              alt={task.author.username}
+              width={30}
+              height={30}
+              className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+              src={`/${task.author.profilePictureUrl}`}
+            />
+          )}
+        </div>
+      </td>
       <td className={cellClasses}>{task.priority}</td>
     </tr>
   );
