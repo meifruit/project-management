@@ -65,7 +65,7 @@ const projectHeader = ({ activeTab, setActiveTab }: Props) => {
             onClick={() => setIsModalNewProjectOpen(true)}
           >
             <Plus className="h-5 w-5" />
-            <span className="hidden md:inline">Add New Task</span>
+            <span className="hidden md:inline">Add New Project</span>
           </button>
           <button className="flex items-center justify-between gap-1 rounded-md p-3 text-gray-400 shadow-md hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300">
             <Filter className="h-5 w-5" />

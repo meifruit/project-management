@@ -3,7 +3,7 @@ import Table from "@/components/Table";
 import { useGetTasksQuery } from "@/state/api";
 import { Task as TaskType } from "@/state/api";
 import { format } from "date-fns";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 type ListProps = {
@@ -152,7 +152,7 @@ const renderRow = (task: TaskType) => {
   );
 };
 
-const TaskCard = ({ status, tasks }: TaskProps) => {
+const TaskCard = ({ status, tasks, setIsModalNewTaskOpen }: TaskProps) => {
   const [isTableVisible, setIsTableVisible] = useState(true);
   const toggleTableVisibility = () => {
     setIsTableVisible((prev) => !prev);
@@ -166,34 +166,43 @@ const TaskCard = ({ status, tasks }: TaskProps) => {
     Completed: "#000000",
   };
   const color = statusColor[status] || "#CCCCCC";
+
   return (
     <div>
-      <div className="mb-1 flex w-full items-center rounded-md bg-gray-200 p-3">
-        <div className="flex items-center">
-          {isTableVisible ? (
-            <ChevronDown
-              className="mr-2 cursor-pointer"
-              onClick={toggleTableVisibility}
-              size={20}
-              strokeWidth={2.5}
-              color="#7d7d7d"
+      <div className="mb-1 w-full rounded-md bg-gray-200 p-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            {isTableVisible ? (
+              <ChevronDown
+                className="mr-2 cursor-pointer"
+                onClick={toggleTableVisibility}
+                size={20}
+                strokeWidth={2.5}
+                color="#7d7d7d"
+              />
+            ) : (
+              <ChevronUp
+                className="mr-2 cursor-pointer"
+                onClick={toggleTableVisibility}
+                size={20}
+                strokeWidth={2.5}
+                color="#7d7d7d"
+              />
+            )}
+            <div
+              className="h-5 w-2 rounded-md shadow-md"
+              style={{ backgroundColor: color }}
             />
-          ) : (
-            <ChevronUp
-              className="mr-2 cursor-pointer"
-              onClick={toggleTableVisibility}
-              size={20}
-              strokeWidth={2.5}
-              color="#7d7d7d"
-            />
-          )}
-          <div
-            className="h-5 w-2 rounded-md shadow-md"
-            style={{ backgroundColor: color }}
-          />
-          <h3 className="flex items-center pl-4 text-lg font-semibold dark:text-white">
-            {status} ({tasksCount.length})
-          </h3>
+            <h3 className="flex items-center pl-4 text-lg font-semibold dark:text-white">
+              {status} ({tasksCount.length})
+            </h3>
+          </div>
+          <button
+            className="text-gray-600"
+            onClick={() => setIsModalNewTaskOpen(true)}
+          >
+            <Plus className="h-5 w-5" />
+          </button>
         </div>
       </div>
       {isTableVisible && (
