@@ -11,6 +11,7 @@ import {
   Table,
 } from "lucide-react";
 import { useState } from "react";
+import ModalNewProject from "./ModalNewProject";
 
 type Props = {
   activeTab: string;
@@ -55,7 +56,14 @@ const projectHeader = ({ activeTab, setActiveTab }: Props) => {
       </div>
       <div className="flex flex-wrap items-center gap-2 md:justify-between">
         <div className="flex items-start gap-2 py-4 md:gap-4">
-          <button className="flex items-center justify-between gap-1 rounded-md bg-[#7678ed] p-3 text-white shadow-md hover:text-gray-600 dark:hover:text-gray-300">
+          <ModalNewProject
+            isOpen={isModalNewProjectOpen}
+            onClose={() => setIsModalNewProjectOpen(false)}
+          />
+          <button
+            className="flex items-center justify-between gap-1 rounded-md bg-[#7678ed] p-3 text-white shadow-md hover:text-gray-600 dark:hover:text-gray-300"
+            onClick={() => setIsModalNewProjectOpen(true)}
+          >
             <Plus className="h-5 w-5" />
             <span className="hidden md:inline">Add New Task</span>
           </button>
