@@ -24,7 +24,7 @@ const projectHeader = ({ activeTab, setActiveTab }: Props) => {
     <div className="pb-6 pt-6 lg:pb-4 lg:pt-8">
       {/* modal new project */}
       <div className="">
-        <Header name={"Product Design Development"} />
+        <Header name={"Project Development"} />
       </div>
       <div className="flex flex-wrap-reverse border-b pb-4 dark:border-stroke-dark md:items-center">
         <div className="flex flex-1 items-center gap-4">
