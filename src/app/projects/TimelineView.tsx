@@ -9,7 +9,7 @@ type Props = {
 };
 
 type TaskTypeItems = "task" | "milestone" | "project";
-const TimelineView = ({ id, setIsModalNewTaskOpen }: Props) => {
+const TimelineView = ({ id }: Props) => {
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
   const {
     data: tasks,

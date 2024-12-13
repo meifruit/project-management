@@ -4,7 +4,6 @@ import {
   Clock,
   Filter,
   LayoutDashboard,
-  LayoutDashboardIcon,
   List,
   Plus,
   Search,

@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import Table from "@/components/Table";
 import { useGetTasksQuery } from "@/state/api";
 import { Task as TaskType } from "@/state/api";

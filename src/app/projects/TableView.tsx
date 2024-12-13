@@ -1,6 +1,5 @@
 import { useGetTasksQuery } from "@/state/api";
 import { useAppSelector } from "../redux";
-import Header from "@/components/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 
@@ -55,7 +54,7 @@ const columns: GridColDef[] = [
     renderCell: (params) => params.value?.assignee || "Unassigned",
   },
 ];
-const TableView = ({ id, setIsModalNewTaskOpen }: Props) => {
+const TableView = ({ id }: Props) => {
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
   const {
     data: tasks,
