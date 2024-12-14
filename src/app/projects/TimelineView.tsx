@@ -17,9 +17,6 @@ const TimelineView = ({ id }: Props) => {
     isLoading,
   } = useGetTasksQuery({ projectId: Number(id) });
 
-  if (isLoading) return <div className="">Loading...</div>;
-  if (error) return <div>An error occurred while fetching tasks </div>;
-
   const [displayOptions, setDisplayOptions] = useState<DisplayOption>({
     viewMode: ViewMode.Month,
     locale: "en-US",
@@ -37,6 +34,9 @@ const TimelineView = ({ id }: Props) => {
       })) || []
     );
   }, [tasks]);
+
+  if (isLoading) return <div className="">Loading...</div>;
+  if (error) return <div>An error occurred while fetching tasks </div>;
 
   const handleViewModeChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
