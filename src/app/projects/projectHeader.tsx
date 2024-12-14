@@ -17,7 +17,7 @@ type Props = {
   setActiveTab: (tabName: string) => void;
 };
 
-const projectHeader = ({ activeTab, setActiveTab }: Props) => {
+const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
   const [isModalNewProjectOpen, setIsModalNewProjectOpen] = useState(false);
   return (
     <div className="pb-6 pt-6 lg:pb-4 lg:pt-8">
@@ -99,7 +99,11 @@ const TabButton = ({ name, icon, setActiveTab, activeTab }: TabButtonProps) => {
 
   return (
     <button
-      className="flex items-center justify-between gap-1 px-1 py-2 text-gray-500 hover:text-blue-600 dark:text-neutral-500 dark:hover:text-white sm:px-2 lg:px-4"
+      className={`flex items-center justify-between gap-1 px-1 py-2 sm:px-2 lg:px-4 ${
+        isActive
+          ? "text-blue-600 dark:text-white"
+          : "text-gray-500 hover:text-blue-600 dark:text-neutral-500 dark:hover:text-white"
+      }`}
       onClick={() => setActiveTab(name)}
     >
       {icon}
@@ -108,4 +112,4 @@ const TabButton = ({ name, icon, setActiveTab, activeTab }: TabButtonProps) => {
   );
 };
 
-export default projectHeader;
+export default ProjectHeader;
