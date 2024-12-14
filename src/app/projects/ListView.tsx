@@ -158,12 +158,13 @@ const TaskCard = ({ status, tasks, setIsModalNewTaskOpen }: TaskProps) => {
   };
   const tasksCount = tasks.filter((task) => task.status === status);
 
-  const statusColor: any = {
+  const statusColor: Record<(typeof taskStatus)[number], string> = {
     "To Do": "#3a86ff",
     "Work In Progress": "#f72585",
     "Under Review": "#007200",
     Completed: "#000000",
   };
+
   const color = statusColor[status] || "#CCCCCC";
 
   return (
