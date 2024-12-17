@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15
@@ -23,26 +21,31 @@ services:
     depends_on:
       - postgres
     ports:
-      - "5432:5432"
+      - "3000:3000"
     expose:
       - "3000"  # Makes it accessible to other containers
     volumes:
-      - ./server:/usr/src/app
+      - ./server:/src/app/
+    command: bash -c  "npm run dev"
 
   frontend:
     build:
-      context: .
+      context: ./.
     container_name: frontend
     environment:
       BACKEND_PORT: 3000
       PORT: 1000
-      NEXT_PUBLIC_API_BASE_URL: http://localhost/:3000
+      # NEXT_PUBLIC_API_BASE_URL: http://backend:3000/
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:3000/
     depends_on:
       - backend
     ports:
       - 1000:1000
+    expose:
+      - "1000"  # Makes it accessible to other containers
     volumes:
-      - .:/src/app
+      - ./src:/app/
+    command: bash -c "npm run dev"
 
 volumes:
   postgres_data:
