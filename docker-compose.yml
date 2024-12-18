@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    expose:
+      - "5432"  # Makes it accessible to other containers
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./server
+    container_name: backend
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgres://user:password@postgres:5432/mydatabase
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"  # Makes it accessible to other containers
+    volumes:
+      - ./server:/src/app/
+    command: bash -c  "npm run dev"
+
+  frontend:
+    build:
+      context: ./.
+    container_name: frontend
+    environment:
+      BACKEND_PORT: 3000
+      PORT: 1000
+      # NEXT_PUBLIC_API_BASE_URL: http://backend:3000/
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:3000/
+    depends_on:
+      - backend
+    ports:
+      - 1000:1000
+    expose:
+      - "1000"  # Makes it accessible to other containers
+    volumes:
+      - ./src:/app/
+    command: bash -c "npm run dev"
+
+volumes:
+  postgres_data:
