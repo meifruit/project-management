@@ -17,6 +17,7 @@ type Props = {
   setActiveTab: (tabName: string) => void;
 };
 
+//correct file name
 const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
   const [isModalNewProjectOpen, setIsModalNewProjectOpen] = useState(false);
   return (
